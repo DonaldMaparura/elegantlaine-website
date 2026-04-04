@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ElegantLaine Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="admin-login" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="logo-mark">✦</span>
+      <span>ElegantLaine</span>
+      <small>Admin Portal</small>
+    </div>
+    <h2>Sign In</h2>
+    <p class="login-sub">Sign in with a user from Firebase Authentication (Email/Password).</p>
+    <form onsubmit="handleLogin(event); return false;">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="admin@elegantlaine.com" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="••••••••" required />
+      </div>
+      <div class="login-error" id="loginError"></div>
+      <button type="submit" class="btn-primary">Sign In →</button>
+    </form>
+  </div>
+</div>
+
+<!-- MAIN ADMIN -->
+<div class="admin-shell" id="adminShell" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark">✦</span>
+      <div>
+        <strong>ElegantLaine</strong>
+        <small>Admin</small>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item" data-page="products">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Products
+      </a>
+      <a href="#" class="nav-item" data-page="orders">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Orders
+      </a>
+      <a href="#" class="nav-item" data-page="customers">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Customers
+      </a>
+      <a href="#" class="nav-item" data-page="marketing">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Marketing
+      </a>
+      <a href="#" class="nav-item" data-page="settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.42 1.42M5.36 18.64l-1.42 1.42M20 12h2M2 12h2M19.07 19.07l-1.42-1.42M5.36 5.36L3.94 3.94M12 20v2M12 2v2"/></svg>
+        Settings
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" class="nav-item" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Store
+      </a>
+      <button class="nav-item" onclick="handleLogout()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+
+    <!-- TOP BAR -->
+    <div class="admin-topbar">
+      <div class="topbar-left">
+        <span id="pageTitle" class="page-title">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Search..." />
+        </div>
+        <div class="topbar-admin">
+          <div class="admin-avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: DASHBOARD -->
+    <div class="admin-page active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff3e0;color:#f57c00">💰</div>
+          <div class="stat-info">
+            <span>Recorded revenue</span>
+            <strong id="statRevenue">R&nbsp;0</strong>
+            <small id="statRevenueSub" class="neutral">No orders recorded yet</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#e8f5e9;color:#388e3c">🛍️</div>
+          <div class="stat-info">
+            <span>Orders</span>
+            <strong id="statOrders">0</strong>
+            <small id="statOrdersSub" class="neutral">—</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fce4ec;color:#c2185b">👥</div>
+          <div class="stat-info">
+            <span>Customers</span>
+            <strong id="statCustomers">0</strong>
+            <small id="statCustomersSub" class="neutral">—</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#e8eaf6;color:#3949ab">📦</div>
+          <div class="stat-info">
+            <span>Products</span>
+            <strong id="statProducts">0</strong>
+            <small id="statProductsSub" class="neutral">Add listings to get started</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="admin-card">
+          <div class="card-header">
+            <h3>Recent Orders</h3>
+            <a href="#" onclick="switchPage('orders')">View all →</a>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+            <tbody id="recentOrdersBody"></tbody>
+          </table>
+        </div>
+        <div class="admin-card">
+          <div class="card-header"><h3>Trending spotlight</h3></div>
+          <div class="top-products" id="topProducts"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: PRODUCTS -->
+    <div class="admin-page" id="page-products">
+      <div class="page-actions">
+        <button class="btn-primary" onclick="openAddProduct()">+ Add Product</button>
+        <div class="filter-row">
+          <select id="catFilter" onchange="filterAdminProducts()">
+            <option value="all">All Categories</option>
+            <option value="wigs">Wigs</option>
+            <option value="bags">Bags</option>
+            <option value="beauty">Beauty</option>
+          </select>
+          <input type="text" id="prodSearch" placeholder="Search products..." oninput="filterAdminProducts()" />
+        </div>
+      </div>
+      <div class="admin-card">
+        <table class="data-table" id="productsTable">
+          <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="productsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PAGE: ORDERS -->
+    <div class="admin-page" id="page-orders">
+      <div class="page-actions">
+        <select id="orderStatusFilter" onchange="filterOrders()">
+          <option value="all">All Orders</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+        </select>
+      </div>
+      <div class="admin-card">
+        <table class="data-table" id="ordersTable">
+          <thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="ordersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PAGE: CUSTOMERS -->
+    <div class="admin-page" id="page-customers">
+      <div class="admin-card">
+        <table class="data-table">
+          <thead><tr><th>Customer</th><th>Email</th><th>Orders</th><th>Total Spent</th><th>Joined</th></tr></thead>
+          <tbody id="customersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PAGE: MARKETING -->
+    <div class="admin-page" id="page-marketing">
+      <div class="marketing-grid">
+        <div class="admin-card">
+          <div class="card-header"><h3>Newsletter</h3></div>
+          <div class="mkt-stat-row">
+            <div class="mkt-stat"><strong>—</strong><span>Subscribers</span></div>
+            <div class="mkt-stat"><strong>—</strong><span>Open rate</span></div>
+            <div class="mkt-stat"><strong>—</strong><span>Click rate</span></div>
+          </div>
+          <p style="color:var(--text-light);font-size:.82rem;margin-top:12px">Link your newsletter tool when you’re ready — numbers will show here.</p>
+          <button type="button" class="btn-primary" style="margin-top:16px" onclick="showAdminToast('Connect your email provider in a future update.')">Send campaign</button>
+        </div>
+        <div class="admin-card">
+          <div class="card-header"><h3>Discount Codes</h3></div>
+          <div class="discount-list" id="discountList"></div>
+          <button class="btn-outline" style="margin-top:16px" onclick="addDiscount()">+ Create Code</button>
+        </div>
+        <div class="admin-card">
+          <div class="card-header"><h3>Social Media</h3></div>
+          <div class="social-links-admin">
+            <div class="social-link-item"><span>Instagram — @elegantlaine</span><span class="badge-green">Live</span></div>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="card-header"><h3>Google Ads</h3></div>
+          <p style="color:var(--text-light);font-size:.85rem;margin-bottom:16px">Drop in your publisher and analytics IDs on the live site when you use them.</p>
+          <div class="form-group"><label>AdSense publisher ID</label><input type="text" placeholder="ca-pub-…" /></div>
+          <div class="form-group"><label>Analytics measurement ID</label><input type="text" placeholder="G-…" /></div>
+          <button type="button" class="btn-primary" style="margin-top:8px" onclick="showAdminToast('Saved locally — wire to your deploy config for production.')">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: SETTINGS -->
+    <div class="admin-page" id="page-settings">
+      <div class="settings-grid">
+        <div class="admin-card">
+          <div class="card-header"><h3>Store Settings</h3></div>
+          <div class="settings-form">
+            <div class="form-group"><label>Store Name</label><input type="text" value="ElegantLaine" /></div>
+            <div class="form-group"><label>Store Email</label><input type="email" value="hello@elegantlaine.com" /></div>
+            <div class="form-group"><label>Currency</label><select><option selected>ZAR (R)</option><option>USD ($)</option><option>GBP (£)</option><option>EUR (€)</option></select></div>
+            <div class="form-group"><label>Store URL</label><input type="text" value="https://elegantlaine.com" /></div>
+            <button class="btn-primary">Save Settings</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="card-header"><h3>Shipping Zones</h3></div>
+          <div class="settings-form">
+            <div class="form-group"><label>Free shipping from (ZAR)</label><input type="number" value="600" readonly title="Matches storefront threshold" /></div>
+            <div class="form-group"><label>Standard rate (ZAR)</label><input type="number" placeholder="Set when you publish rates" step="1" /></div>
+            <div class="form-group"><label>Express rate (ZAR)</label><input type="number" placeholder="Optional" step="1" /></div>
+            <button class="btn-primary">Save Shipping</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="card-header"><h3>Payment Methods</h3></div>
+          <div class="payment-toggles">
+            <div class="toggle-row"><span>PayFast (checkout)</span><label class="toggle"><input type="checkbox" checked disabled /><span class="toggle-slider"></span></label></div>
+            <p style="font-size:.8rem;color:var(--text-light);margin-top:12px">PayFast is configured via your server <code style="font-size:.75rem">.env</code> — not in this panel.</p>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="card-header"><h3>Admin Access</h3></div>
+          <div class="settings-form">
+            <div class="form-group"><label>Admin Email</label><input type="email" value="admin@elegantlaine.com" /></div>
+            <div class="form-group"><label>New Password</label><input type="password" placeholder="Leave blank to keep current" /></div>
+            <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="Confirm new password" /></div>
+            <button class="btn-primary">Update Password</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ADD/EDIT PRODUCT MODAL -->
+<div class="modal" id="productModal">
+  <div class="modal-backdrop" onclick="closeModal()"></div>
+  <div class="modal-inner">
+    <div class="modal-header">
+      <h3 id="modalTitle">Add New Product</h3>
+      <button onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="product-form-grid">
+        <div class="form-group">
+          <label>Product Name *</label>
+          <input type="text" id="pName" placeholder="e.g. Silk Lace Front Wig" />
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="pCategory">
+            <option value="">Select category</option>
+            <option value="wigs">Wigs</option>
+            <option value="bags">Bags</option>
+            <option value="beauty">Beauty</option>
+            <option value="accessories">Accessories</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Price (ZAR) *</label>
+          <input type="number" id="pPrice" placeholder="0.00" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Compare-at (ZAR)</label>
+          <input type="number" id="pOldPrice" placeholder="Original price (for sale)" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Stock Quantity *</label>
+          <input type="number" id="pStock" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>SKU</label>
+          <input type="text" id="pSku" placeholder="e.g. EL-WIG-001" />
+        </div>
+        <div class="form-group full-span">
+          <label>Description</label>
+          <textarea id="pDescription" rows="4" placeholder="Describe the product — material, features, size..."></textarea>
+        </div>
+        <div class="form-group full-span">
+          <label>Product Images</label>
+          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('imageUpload').click()">
+            <input type="file" id="imageUpload" accept="image/*" multiple style="display:none" onchange="handleImageUpload(event)" />
+            <div class="upload-placeholder">
+              <span>📷</span>
+              <p>Click to upload or drag & drop</p>
+              <small>JPG, PNG, WebP — max 5MB each</small>
+            </div>
+            <div class="uploaded-images" id="uploadedImages"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Badge</label>
+          <select id="pBadge">
+            <option value="">None</option>
+            <option value="new">New</option>
+            <option value="bestseller">Bestseller</option>
+            <option value="sale">Sale</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="pStatus">
+            <option value="active">Active (visible)</option>
+            <option value="draft">Draft (hidden)</option>
+          </select>
+        </div>
+        <div class="form-group full-span">
+          <label>SEO Description</label>
+          <textarea id="pSeo" rows="2" placeholder="Short meta description for Google (max 160 chars)"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveProduct()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/firebase-init.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

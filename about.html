@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — ElegantLaine</title>
+  <meta name="description" content="Learn about ElegantLaine — premium wigs, bags, and beauty." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..600&family=Fraunces:ital,opsz,wght@0,9..144,300..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/store.css" />
+  <style>
+    .simple-page { min-height: 70vh; padding: 48px 24px 80px; max-width: 720px; margin: 0 auto; }
+    .simple-page h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--deep); margin-bottom: 20px; }
+    .simple-page p { color: var(--text-light); line-height: 1.75; margin-bottom: 14px; font-size: .95rem; }
+    .back-link { display: inline-block; margin-top: 28px; color: var(--gold-dark); font-size: .9rem; }
+  </style>
+</head>
+<body>
+<div class="announce-bar"><p>✦ SA · Free delivery over R 600 · <a href="shop.html">Shop →</a></p></div>
+<nav class="nav" id="mainNav">
+  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">ElegantLaine</span></a></div>
+  <div class="nav-actions">
+    <a href="index.html" class="btn-ghost" style="font-size:.82rem">← Back to Store</a>
+  </div>
+</nav>
+<main class="simple-page">
+  <h1>About ElegantLaine</h1>
+  <p>ElegantLaine curates premium wigs, bags, and beauty products for women who want quality and confidence in every purchase.</p>
+  <p>This page is a starter for your brand story. Replace this copy with your founding story, mission, and team when you are ready.</p>
+  <a href="index.html" class="back-link">← Back to home</a>
+</main>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+  });
+</script>
+</body>
+</html>
+

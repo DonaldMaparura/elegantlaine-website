@@ -1,0 +1,19 @@
+{
+  "name": "elegantlaine-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "payfast-server": "node server/payfast-server.mjs",
+    "site": "npx --yes serve . -l 3000",
+    "deploy": "firebase deploy",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:firestore": "firebase deploy --only firestore"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.35.1"
+  }
+}

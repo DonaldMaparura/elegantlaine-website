@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account — ElegantLaine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..600&family=Fraunces:ital,opsz,wght@0,9..144,300..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/store.css" />
+  <style>
+    .account-page { min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 60px 24px; background: var(--cream); }
+    .auth-box { background: #fff; border-radius: 16px; box-shadow: 0 8px 40px rgba(26,18,8,.1); width: 100%; max-width: 420px; overflow: hidden; }
+    .auth-tabs { display: flex; border-bottom: 1px solid var(--border); }
+    .auth-tab { flex: 1; padding: 16px; text-align: center; font-size: .875rem; font-weight: 500; color: var(--text-light); cursor: pointer; border: none; background: none; font-family: var(--font-body); transition: var(--transition); border-bottom: 2px solid transparent; }
+    .auth-tab.active { color: var(--deep); border-bottom-color: var(--deep); }
+    .auth-form { padding: 32px; display: none; }
+    .auth-form.active { display: block; }
+    .auth-form h2 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--deep); margin-bottom: 6px; }
+    .auth-form p { color: var(--text-light); font-size: .85rem; margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: .78rem; font-weight: 500; color: var(--text-light); margin-bottom: 6px; letter-spacing: .04em; }
+    .form-group input { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 6px; font-family: var(--font-body); font-size: .875rem; color: var(--text); outline: none; transition: var(--transition); }
+    .form-group input:focus { border-color: var(--gold-dark); }
+    .form-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--text-lighter); font-size: .78rem; }
+    .form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .social-auth { display: flex; flex-direction: column; gap: 10px; }
+    .social-auth-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 11px; border: 1.5px solid var(--border); border-radius: 6px; font-size: .82rem; font-family: var(--font-body); cursor: pointer; background: #fff; transition: var(--transition); color: var(--text); }
+    .social-auth-btn:hover { border-color: var(--deep); background: var(--cream); }
+    .auth-fine { font-size: .72rem; color: var(--text-lighter); text-align: center; margin-top: 16px; }
+    .auth-fine a { color: var(--gold-dark); }
+    .success-msg { background: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; padding: 12px 14px; border-radius: 6px; font-size: .82rem; margin-bottom: 16px; display: none; }
+    .success-msg.show { display: block; }
+    /* Logged-in state */
+    .account-dashboard { padding: 32px; }
+    .account-welcome { margin-bottom: 24px; }
+    .account-welcome h2 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--deep); }
+    .account-nav { display: flex; flex-direction: column; gap: 4px; }
+    .account-nav-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: .875rem; cursor: pointer; color: var(--text); transition: var(--transition); }
+    .account-nav-item:hover { color: var(--deep); }
+    .account-nav-item:last-child { border-bottom: none; }
+  </style>
+</head>
+<body>
+<div class="announce-bar"><p>✦ SA · Free delivery over R 600 · <a href="shop.html">Shop →</a></p></div>
+<nav class="nav" id="mainNav">
+  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">ElegantLaine</span></a></div>
+  <div class="nav-actions">
+    <a href="index.html" class="btn-ghost" style="font-size:.82rem">← Back to Store</a>
+  </div>
+</nav>
+
+<div class="account-page">
+  <!-- Auth Box (logged out) -->
+  <div class="auth-box" id="authBox">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="switchTab('register')">Create Account</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="auth-form active" id="loginForm">
+      <h2>Welcome back.</h2>
+      <p>Sign in to view your orders, wishlist and account details.</p>
+      <div class="success-msg" id="loginSuccess">Signed in! Redirecting...</div>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="you@email.com" required /></div>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••" required /></div>
+        <div style="text-align:right;margin-bottom:16px"><a href="#" style="font-size:.78rem;color:var(--gold-dark)">Forgot password?</a></div>
+        <button type="submit" class="btn-primary" style="width:100%">Sign In →</button>
+      </form>
+      <div class="form-divider">or continue with</div>
+      <div class="social-auth">
+        <button class="social-auth-btn" onclick="alert('Connect Google OAuth')">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <button class="social-auth-btn" onclick="alert('Connect Facebook OAuth')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          Continue with Facebook
+        </button>
+      </div>
+      <p class="auth-fine">By signing in you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="auth-form" id="registerForm">
+      <h2>Join ElegantLaine.</h2>
+      <p>Create your account and get 10% off your first order.</p>
+      <div class="success-msg" id="registerSuccess">🎉 Account created! Check your email to verify.</div>
+      <form onsubmit="handleRegister(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-group"><label>First Name</label><input type="text" id="regFirst" placeholder="Jane" required /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="regLast" placeholder="Smith" required /></div>
+        </div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="you@email.com" required /></div>
+        <div class="form-group"><label>Password</label><input type="password" id="regPass" placeholder="Min 8 characters" minlength="8" required /></div>
+        <div class="form-group"><label>Confirm Password</label><input type="password" id="regConfirm" placeholder="Confirm password" required /></div>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:.78rem;color:var(--text-light);margin-bottom:16px;cursor:pointer">
+          <input type="checkbox" required style="margin-top:2px;accent-color:var(--gold-dark)" />
+          I agree to the <a href="terms.html" style="color:var(--gold-dark)">Terms of Service</a> and <a href="privacy.html" style="color:var(--gold-dark)">Privacy Policy</a>
+        </label>
+        <button type="submit" class="btn-primary" style="width:100%">Create Account — Get 10% Off →</button>
+      </form>
+      <div class="form-divider">or</div>
+      <div class="social-auth">
+        <button class="social-auth-btn" onclick="alert('Connect Google OAuth')">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Sign up with Google
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logged-in Dashboard (shown after login) -->
+  <div class="auth-box" id="accountDash" style="display:none">
+    <div class="account-dashboard">
+      <div class="account-welcome">
+        <h2>Hello, <span id="dashName">Jane</span> ✦</h2>
+        <p style="color:var(--text-light);font-size:.85rem">Welcome to your ElegantLaine account</p>
+      </div>
+      <div class="account-nav">
+        <div class="account-nav-item" onclick="alert('Orders page — connect backend')"><span>📦 My Orders</span><span>→</span></div>
+        <div class="account-nav-item" onclick="alert('Wishlist — connect to store wishlist')"><span>❤️ Wishlist</span><span>→</span></div>
+        <div class="account-nav-item" onclick="alert('Address book — connect backend')"><span>📍 Addresses</span><span>→</span></div>
+        <div class="account-nav-item" onclick="alert('Payment methods — connect Stripe')"><span>💳 Payment Methods</span><span>→</span></div>
+        <div class="account-nav-item" onclick="alert('Notifications settings')"><span>🔔 Notifications</span><span>→</span></div>
+        <div class="account-nav-item" onclick="handleLogout()" style="color:var(--rose)"><span>Sign Out</span><span>→</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'register' && i === 1)));
+  document.getElementById('loginForm').classList.toggle('active', tab === 'login');
+  document.getElementById('registerForm').classList.toggle('active', tab === 'register');
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  // Client-side session only — replace with your auth provider when ready
+  localStorage.setItem('el_user', JSON.stringify({ email, name: email.split('@')[0] }));
+  document.getElementById('loginSuccess').classList.add('show');
+  setTimeout(() => showDashboard(), 1200);
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  const pass = document.getElementById('regPass').value;
+  const confirm = document.getElementById('regConfirm').value;
+  if (pass !== confirm) { alert('Passwords do not match.'); return; }
+  const first = document.getElementById('regFirst').value;
+  const email = document.getElementById('regEmail').value;
+  localStorage.setItem('el_user', JSON.stringify({ email, name: first }));
+  document.getElementById('registerSuccess').classList.add('show');
+  setTimeout(() => showDashboard(), 1500);
+}
+
+function showDashboard() {
+  const user = JSON.parse(localStorage.getItem('el_user') || '{}');
+  document.getElementById('authBox').style.display = 'none';
+  document.getElementById('accountDash').style.display = 'block';
+  document.getElementById('dashName').textContent = user.name || 'there';
+}
+
+function handleLogout() {
+  localStorage.removeItem('el_user');
+  document.getElementById('accountDash').style.display = 'none';
+  document.getElementById('authBox').style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const user = localStorage.getItem('el_user');
+  if (user) showDashboard();
+
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+});
+</script>
+</body>
+</html>

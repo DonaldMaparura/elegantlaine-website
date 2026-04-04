@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — ElegantLaine</title>
+  <meta name="description" content="Complete your ElegantLaine order." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..600&family=Fraunces:ital,opsz,wght@0,9..144,300..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/store.css" />
+  <style>
+    .checkout-wrap { min-height: 75vh; padding: 48px 24px 80px; max-width: 560px; margin: 0 auto; }
+    .checkout-wrap h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--deep); margin-bottom: 24px; }
+    .co-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); font-size: .9rem; }
+    .co-line .emoji { font-size: 1.75rem; }
+    .co-sub { display: flex; justify-content: space-between; margin-top: 24px; font-size: 1.1rem; }
+    .co-note { font-size: .85rem; color: var(--text-light); margin: 20px 0; line-height: 1.6; }
+    .co-form { display: grid; gap: 14px; margin: 24px 0; }
+    .co-form label { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--text-light); display: block; margin-bottom: 6px; }
+    .co-form input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: .95rem; }
+    .co-pay-error { display: none; color: #8b2942; font-size: .88rem; margin-top: 12px; line-height: 1.5; }
+    .back-link { display: inline-block; margin-top: 16px; color: var(--gold-dark); font-size: .9rem; }
+  </style>
+</head>
+<body>
+<div class="announce-bar"><p>✦ SA · Free delivery over R 600 · <a href="shop.html">Shop →</a></p></div>
+<nav class="nav" id="mainNav">
+  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">ElegantLaine</span></a></div>
+  <div class="nav-actions"><a href="shop.html" class="btn-ghost" style="font-size:.82rem">← Keep shopping</a></div>
+</nav>
+<main class="checkout-wrap">
+  <h1>Checkout</h1>
+  <div id="coBody"></div>
+</main>
+<script>
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    window.EL_PAYFAST_API_BASE = 'http://localhost:8787';
+  }
+</script>
+<script src="js/store.js"></script>
+<script src="js/checkout.js"></script>
+<script>
+  function renderCheckout() {
+    const cart = JSON.parse(localStorage.getItem('el_cart') || '[]');
+    const el = document.getElementById('coBody');
+    const minShip = typeof FREE_SHIPPING_MIN !== 'undefined' ? FREE_SHIPPING_MIN : 600;
+    if (!cart.length) {
+      el.innerHTML = '<p style="color:var(--text-light)">Your bag is empty.</p><a href="shop.html" class="btn-primary">Shop products</a>';
+      return;
+    }
+    let sub = 0;
+    const lines = cart.map(i => {
+      const line = i.price * i.qty;
+      sub += line;
+      return `<div class="co-line"><span><span class="emoji">${i.emoji || '✦'}</span> ${i.name} × ${i.qty}</span><strong>${formatZAR(line, 2)}</strong></div>`;
+    }).join('');
+    const shipNote = sub >= minShip
+      ? `Delivery: <strong>Free</strong> on this order (over ${formatZAR(minShip)})`
+      : 'Delivery: shipping is confirmed after payment where applicable.';
+    el.innerHTML = lines +
+      `<div class="co-sub"><span>Subtotal</span><strong id="coSub">${formatZAR(sub, 2)}</strong></div>` +
+      `<p class="co-note">${shipNote}</p>` +
+      `<div class="co-form">` +
+      `<div><label for="coEmail">Email</label><input type="email" id="coEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>` +
+      `<div><label for="coFirst">First name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-lighter)">(optional)</span></label><input type="text" id="coFirst" name="first" autocomplete="given-name" /></div>` +
+      `<div><label for="coLast">Last name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-lighter)">(optional)</span></label><input type="text" id="coLast" name="last" autocomplete="family-name" /></div>` +
+      `</div>` +
+      `<button type="button" class="btn-primary full-width" id="coPayBtn" onclick="startPayFast()">Pay with PayFast</button>` +
+      `<p id="coPayError" class="co-pay-error" role="alert"></p>` +
+      `<p class="co-note">You’ll complete payment on PayFast (card, Instant EFT, and other options they show at checkout).</p>` +
+      `<a href="shop.html" class="back-link">← Return to shop</a>`;
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCheckout();
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+  });
+</script>
+</body>
+</html>

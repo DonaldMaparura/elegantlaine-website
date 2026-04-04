@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — ElegantLaine</title>
+  <meta name="description" content="ElegantLaine terms of service." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..600&family=Fraunces:ital,opsz,wght@0,9..144,300..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/store.css" />
+  <style>
+    .simple-page { min-height: 70vh; padding: 48px 24px 80px; max-width: 720px; margin: 0 auto; }
+    .simple-page h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--deep); margin-bottom: 20px; }
+    .simple-page p, .simple-page li { color: var(--text-light); line-height: 1.75; margin-bottom: 12px; font-size: .92rem; }
+    .simple-page ul { padding-left: 1.2rem; margin-bottom: 16px; }
+    .back-link { display: inline-block; margin-top: 28px; color: var(--gold-dark); font-size: .9rem; }
+  </style>
+</head>
+<body>
+<div class="announce-bar"><p>✦ SA · Free delivery over R 600 · <a href="shop.html">Shop →</a></p></div>
+<nav class="nav" id="mainNav">
+  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">ElegantLaine</span></a></div>
+  <div class="nav-actions"><a href="index.html" class="btn-ghost" style="font-size:.82rem">← Back to Store</a></div>
+</nav>
+<main class="simple-page">
+  <h1>Terms of Service</h1>
+  <p><strong>Placeholder.</strong> Replace with counsel-reviewed terms for your jurisdiction and business model.</p>
+  <ul>
+    <li>By using this site you agree to these terms and our <a href="privacy.html">Privacy Policy</a>.</li>
+    <li>Products, prices, and availability are subject to change.</li>
+    <li>See <a href="shipping.html">Shipping &amp; Returns</a> for delivery and return rules.</li>
+  </ul>
+  <a href="index.html" class="back-link">← Back to home</a>
+</main>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+  });
+</script>
+</body>
+</html>
+
