@@ -7,6 +7,8 @@
     "site": "npx --yes serve . -l 3000",
     "deploy": "firebase deploy",
     "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:all": "firebase deploy --only hosting,functions",
     "deploy:firestore": "firebase deploy --only firestore"
   },
   "dependencies": {

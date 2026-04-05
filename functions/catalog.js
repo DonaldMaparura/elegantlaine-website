@@ -1,7 +1,7 @@
 /**
- * Authoritative prices for checkout validation (keep aligned with js/store.js PRODUCTS).
+ * Server-side prices — keep aligned with storefront (js/store.js / Firestore).
  */
-export const CATALOG = new Map([
+const CATALOG = new Map([
   [1, { price: 2499, name: 'Silk Lace Front 22″' }],
   [2, { price: 3199, name: 'Body Wave Full Lace' }],
   [3, { price: 1899, name: 'Jet Black Bob 12″' }],
@@ -22,7 +22,7 @@ export const CATALOG = new Map([
   [18, { price: 389, name: 'Hydrating Cleanser 200ml' }],
 ]);
 
-export function validateCartLines(lines) {
+function validateCartLines(lines) {
   if (!Array.isArray(lines) || !lines.length) {
     return { ok: false, error: 'Cart is empty' };
   }
@@ -42,3 +42,5 @@ export function validateCartLines(lines) {
     itemDescription: desc.join('; ').slice(0, 255),
   };
 }
+
+module.exports = { CATALOG, validateCartLines };

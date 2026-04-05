@@ -123,7 +123,7 @@
 <footer class="footer" style="margin-top:60px">
   <div class="container">
     <div class="footer-bottom">
-      <p>© 2025 ElegantLaine. All rights reserved.</p>
+      <p>© 2026 ElegantLaine. All rights reserved.</p>
       <div class="payment-icons"><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span></div>
     </div>
   </div>
@@ -142,7 +142,8 @@ const urlQ = urlParams.get('q');
 
 if (urlCat) {
   document.querySelectorAll(`input[value="${urlCat}"]`).forEach(cb => cb.checked = true);
-  document.getElementById('shopBreadcrumb').textContent = urlCat.charAt(0).toUpperCase() + urlCat.slice(1);
+  const label = urlCat.replace(/-/g, ' ');
+  document.getElementById('shopBreadcrumb').textContent = label.charAt(0).toUpperCase() + label.slice(1);
 }
 if (urlQ) {
   document.getElementById('shopBreadcrumb').textContent = `Search: "${urlQ}"`;
@@ -153,19 +154,31 @@ function applyFilters() {
   const badges = Array.from(document.querySelectorAll('.badge-filter:checked')).map(b => b.value);
   const minP = parseFloat(document.getElementById('minPrice').value) || 0;
   const maxP = parseFloat(document.getElementById('maxPrice').value) || Infinity;
-  const inStock = document.getElementById('inStockOnly').checked;
+  const inStockOnly = document.getElementById('inStockOnly').checked;
   const sort = document.getElementById('sortSelect').value;
   const q = urlQ ? urlQ.toLowerCase() : '';
 
   let list = [...PRODUCTS];
+  if (urlCat && typeof window.elProductMatchesNavCat === 'function') {
+    list = list.filter((p) => window.elProductMatchesNavCat(p, urlCat));
+  }
   if (cats.length) list = list.filter(p => cats.includes(p.category));
-  if (badges.length) list = list.filter(p => badges.includes(p.badge));
+  if (badges.length) list = list.filter(p => p.badge && badges.includes(p.badge));
   if (minP) list = list.filter(p => p.price >= minP);
   if (maxP !== Infinity) list = list.filter(p => p.price <= maxP);
-  if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+  if (inStockOnly) list = list.filter(p => p.inStock !== false);
+  if (q) {
+    list = list.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q) ||
+        (p.tags && p.tags.some((t) => t.includes(q)))
+    );
+  }
 
   if (sort === 'price-asc') list.sort((a,b) => a.price - b.price);
   else if (sort === 'price-desc') list.sort((a,b) => b.price - a.price);
+  else if (sort === 'new') list.sort((a, b) => String(b.id).localeCompare(String(a.id), undefined, { numeric: true }));
 
   const grid = document.getElementById('productsGrid');
   const noRes = document.getElementById('noResults');
@@ -182,25 +195,7 @@ function applyFilters() {
       card.style.animation = `fadeSlideUp .5s ${i*50}ms ease both`;
       const wl = JSON.parse(localStorage.getItem('el_wishlist') || '[]');
       const inWishlist = wl.some((id) => String(id) === String(p.id));
-      card.innerHTML = `
-        <div class="product-img" style="background:linear-gradient(145deg,${p.color}22 0%,${p.color}44 100%)">
-          ${p.badge ? `<span class="product-badge ${p.badge === 'sale' ? 'sale' : p.badge === 'new' ? 'new' : ''}">${p.badge}</span>` : ''}
-          <span style="font-size:3.2rem;position:relative;z-index:1">${p.emoji}</span>
-          <div class="product-actions">
-            <button class="product-action-btn" onclick="toggleWishlist(${JSON.stringify(p.id)},this)">${inWishlist?'❤️':'🤍'}</button>
-            <button class="product-action-btn" onclick="quickView(${JSON.stringify(p.id)})">👁</button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-category">${p.category}</div>
-          <div class="product-name">${p.name}</div>
-          <div class="product-price-row">
-            <div><span class="product-price">${formatZAR(p.price)}</span>${p.oldPrice?`<span class="product-price-old">${formatZAR(p.oldPrice)}</span>`:''}</div>
-            <div class="product-stars">${'★'.repeat(p.stars)} <span style="color:var(--text-lighter);font-size:.7rem">(${p.reviews})</span></div>
-          </div>
-        </div>
-        <button class="product-add-btn" onclick="addToCart(${JSON.stringify(p.id)})">Add to Bag +</button>
-      `;
+      card.innerHTML = window.elBuildProductCardHTML(p, inWishlist);
       grid.appendChild(card);
     });
   }

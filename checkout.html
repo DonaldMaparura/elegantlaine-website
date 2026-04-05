@@ -13,6 +13,9 @@
     .checkout-wrap h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--deep); margin-bottom: 24px; }
     .co-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); font-size: .9rem; }
     .co-line .emoji { font-size: 1.75rem; }
+    .co-thumb { display: inline-flex; width: 44px; height: 44px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); vertical-align: middle; margin-right: 10px; flex-shrink: 0; }
+    .co-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .co-line span > span:first-child { vertical-align: middle; }
     .co-sub { display: flex; justify-content: space-between; margin-top: 24px; font-size: 1.1rem; }
     .co-note { font-size: .85rem; color: var(--text-light); margin: 20px 0; line-height: 1.6; }
     .co-form { display: grid; gap: 14px; margin: 24px 0; }
@@ -32,11 +35,7 @@
   <h1>Checkout</h1>
   <div id="coBody"></div>
 </main>
-<script>
-  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-    window.EL_PAYFAST_API_BASE = 'http://localhost:8787';
-  }
-</script>
+<script src="js/payfast-runtime.js"></script>
 <script src="js/store.js"></script>
 <script src="js/checkout.js"></script>
 <script>
@@ -49,10 +48,14 @@
       return;
     }
     let sub = 0;
+    const esc = typeof window.escapeHtml === 'function' ? window.escapeHtml : (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
     const lines = cart.map(i => {
       const line = i.price * i.qty;
       sub += line;
-      return `<div class="co-line"><span><span class="emoji">${i.emoji || '✦'}</span> ${i.name} × ${i.qty}</span><strong>${formatZAR(line, 2)}</strong></div>`;
+      const lead = i.image
+        ? `<span class="co-thumb"><img src="${esc(i.image)}" alt="" width="44" height="44" loading="lazy" /></span>`
+        : `<span class="emoji">${i.emoji || '✦'}</span>`;
+      return `<div class="co-line"><span>${lead} ${esc(i.name)} × ${i.qty}</span><strong>${formatZAR(line, 2)}</strong></div>`;
     }).join('');
     const shipNote = sub >= minShip
       ? `Delivery: <strong>Free</strong> on this order (over ${formatZAR(minShip)})`

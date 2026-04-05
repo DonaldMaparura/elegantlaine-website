@@ -37,6 +37,8 @@ function firestoreToAdminProduct(docId, d) {
     status: d.status || 'active',
     emoji: d.emoji || '✨',
     sortOrder: Number(d.sortOrder) || 0,
+    image: d.image || '',
+    description: d.description || '',
   };
 }
 
@@ -360,6 +362,10 @@ function editProduct(id) {
   document.getElementById('pSku').value = p.sku || '';
   document.getElementById('pBadge').value = p.badge || '';
   document.getElementById('pStatus').value = p.status;
+  const imgEl = document.getElementById('pImage');
+  if (imgEl) imgEl.value = p.image || '';
+  const descEl = document.getElementById('pDescription');
+  if (descEl) descEl.value = p.description || '';
   openModal();
 }
 
@@ -383,6 +389,8 @@ async function saveProduct() {
   const sku = document.getElementById('pSku').value.trim();
   const badge = document.getElementById('pBadge').value || null;
   const status = document.getElementById('pStatus').value;
+  const image = (document.getElementById('pImage')?.value || '').trim();
+  const description = (document.getElementById('pDescription')?.value || '').trim();
 
   if (!name || !category || !price) {
     alert('Please fill in all required fields.');
@@ -414,6 +422,8 @@ async function saveProduct() {
     reviews: 0,
     sortOrder: Date.now(),
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    image: image || null,
+    description: description || null,
   };
 
   try {
@@ -427,7 +437,7 @@ async function saveProduct() {
 }
 
 function clearProductForm() {
-  ['pName', 'pPrice', 'pOldPrice', 'pStock', 'pSku', 'pDescription', 'pSeo'].forEach((fid) => {
+  ['pName', 'pPrice', 'pOldPrice', 'pStock', 'pSku', 'pDescription', 'pSeo', 'pImage'].forEach((fid) => {
     const el = document.getElementById(fid);
     if (el) el.value = '';
   });

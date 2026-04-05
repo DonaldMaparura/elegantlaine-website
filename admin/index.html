@@ -335,6 +335,10 @@
           <textarea id="pDescription" rows="4" placeholder="Describe the product — material, features, size..."></textarea>
         </div>
         <div class="form-group full-span">
+          <label>Primary image URL</label>
+          <input type="url" id="pImage" placeholder="https://… (product photo shown in shop)" />
+        </div>
+        <div class="form-group full-span">
           <label>Product Images</label>
           <div class="upload-zone" id="uploadZone" onclick="document.getElementById('imageUpload').click()">
             <input type="file" id="imageUpload" accept="image/*" multiple style="display:none" onchange="handleImageUpload(event)" />

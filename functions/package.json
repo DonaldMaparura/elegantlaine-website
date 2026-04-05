@@ -1,0 +1,13 @@
+{
+  "name": "elegantlaine-functions",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "firebase-functions": "^6.3.0"
+  }
+}
