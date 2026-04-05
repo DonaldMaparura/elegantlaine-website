@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product — ElegantLaine</title>
+  <title>Product — Elegantlaine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..600&family=Fraunces:ital,opsz,wght@0,9..144,300..600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/store.css" />
@@ -39,7 +39,7 @@
 <body>
 <div class="announce-bar"><p>✦ SA · Free delivery over R 600 · <a href="shop.html">Shop →</a></p></div>
 <nav class="nav" id="mainNav">
-  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">ElegantLaine</span></a></div>
+  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">Elegantlaine</span></a></div>
   <ul class="nav-links">
     <li><a href="shop.html">All Products</a></li>
   </ul>
@@ -74,10 +74,10 @@ function renderProductPage() {
   const root = document.getElementById('pdRoot');
   if (!p) {
     root.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><p style="color:var(--text-light);margin-bottom:20px">Product not found.</p><a href="shop.html" class="btn-primary">Browse shop</a></div>';
-    document.title = 'Product not found — ElegantLaine';
+    document.title = 'Product not found — Elegantlaine';
     return;
   }
-  document.title = p.name + ' — ElegantLaine';
+  document.title = p.name + ' — Elegantlaine';
   const addJs = JSON.stringify(p.id);
   const desc = (p.description || 'Premium quality — ships nationwide in SA. Free returns within 30 days on eligible items.').replace(/</g, '&lt;');
   const imgs = [];

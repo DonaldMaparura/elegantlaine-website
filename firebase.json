@@ -3,19 +3,9 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ]
-    }
-  ],
+  "storage": {
+    "rules": "storage.rules"
+  },
   "hosting": {
     "public": ".",
     "ignore": [
@@ -23,8 +13,31 @@
       "**/.*",
       "**/node_modules/**",
       "**/server/**",
+      "functions/**",
       ".env",
-      "*.log"
+      "*.log",
+      "env.example",
+      "README.md",
+      "package*.json",
+      "firestore.rules",
+      "firestore.indexes.json",
+      "storage.rules"
+    ],
+    "rewrites": [
+      {
+        "source": "/admin",
+        "destination": "/admin/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [{"key": "Cache-Control", "value": "max-age=86400"}]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [{"key": "Cache-Control", "value": "no-cache"}]
+      }
     ]
   }
 }

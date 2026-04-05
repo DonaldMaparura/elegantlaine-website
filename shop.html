@@ -3,135 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop All — ElegantLaine</title>
-  <meta name="description" content="Browse all ElegantLaine products — wigs, bags and beauty essentials. Filter by category, price and more." />
+  <title>Shop All Products — Elegantlaine | Wigs, Bags & Beauty SA</title>
+  <meta name="description" content="Browse all Elegantlaine products — wigs, bags and beauty essentials. Filter by category, price and more." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..600&family=Fraunces:ital,opsz,wght@0,9..144,300..600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/store.css" />
-  <style>
-    .shop-layout { display:grid;grid-template-columns:240px 1fr;gap:40px;padding:48px 0;max-width:1280px;margin:0 auto;padding-left:24px;padding-right:24px; }
-    .shop-filters { position:sticky;top:80px;align-self:start; }
-    .filter-block { margin-bottom:32px; }
-    .filter-block h4 { font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-lighter);margin-bottom:12px;font-weight:600; }
-    .filter-option { display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer; }
-    .filter-option input { accent-color:var(--gold-dark); }
-    .filter-option span { font-size:.875rem;color:var(--text);transition:var(--transition); }
-    .filter-option:hover span { color:var(--deep); }
-    .price-range { display:flex;gap:8px;align-items:center; }
-    .price-range input { width:80px;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--font-body);font-size:.82rem; }
-    .shop-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:28px; }
-    .shop-result-count { font-size:.85rem;color:var(--text-light); }
-    .shop-sort select { border:1.5px solid var(--border);padding:8px 14px;border-radius:6px;font-family:var(--font-body);font-size:.82rem;color:var(--text);background:#fff;cursor:pointer; }
-    .shop-breadcrumb { font-size:.8rem;color:var(--text-lighter);padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:0; }
-    .shop-breadcrumb a { color:var(--text-light); }
-    .active-filters { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px; }
-    .active-filter { display:flex;align-items:center;gap:6px;background:var(--deep);color:#fff;padding:4px 12px;border-radius:24px;font-size:.75rem; }
-    .active-filter button { background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:.85rem; }
-    .no-results { text-align:center;padding:80px 0;color:var(--text-light); }
-    .no-results span { font-size:3rem;display:block;margin-bottom:12px; }
-    @media(max-width:900px) { .shop-layout{grid-template-columns:1fr} .shop-filters{position:static;display:none} }
-  </style>
-</head>
-<body>
-<div class="announce-bar">
-  <p>✦ South Africa · Free delivery over R 600 · New edits weekly · <a href="shop.html">Shop →</a></p>
-</div>
-<nav class="nav" id="mainNav">
-  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">ElegantLaine</span></a></div>
-  <ul class="nav-links">
-    <li class="has-dropdown"><a href="#">Wigs</a><div class="dropdown"><a href="shop.html?cat=wigs">All Wigs</a><a href="shop.html?cat=lace-front">Lace Front</a><a href="shop.html?cat=human-hair">Human Hair</a></div></li>
-    <li class="has-dropdown"><a href="#">Bags</a><div class="dropdown"><a href="shop.html?cat=bags">All Bags</a><a href="shop.html?cat=tote-bags">Tote Bags</a><a href="shop.html?cat=crossbody">Crossbody</a></div></li>
-    <li class="has-dropdown"><a href="#">Beauty</a><div class="dropdown"><a href="shop.html?cat=beauty">All Beauty</a><a href="shop.html?cat=makeup">Makeup</a><a href="shop.html?cat=skincare">Skincare</a></div></li>
-    <li><a href="shop.html">All Products</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="btn-icon" id="searchToggle" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
-    <a href="account.html" class="btn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
-    <button class="btn-icon cart-btn" id="cartToggle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count" id="cartCount">0</span></button>
-  </div>
-</nav>
-
-<div class="container">
-  <div class="shop-breadcrumb"><a href="index.html">Home</a> / <span id="shopBreadcrumb">All Products</span></div>
-</div>
-
-<div class="shop-layout">
-  <aside class="shop-filters">
-    <div class="filter-block">
-      <h4>Category</h4>
-      <label class="filter-option"><input type="checkbox" value="wigs" onchange="applyFilters()" /><span>Wigs</span></label>
-      <label class="filter-option"><input type="checkbox" value="bags" onchange="applyFilters()" /><span>Bags</span></label>
-      <label class="filter-option"><input type="checkbox" value="beauty" onchange="applyFilters()" /><span>Beauty</span></label>
-    </div>
-    <div class="filter-block">
-      <h4>Price Range</h4>
-      <div class="price-range">
-        <input type="number" id="minPrice" placeholder="Min" min="0" onchange="applyFilters()" />
-        <span style="color:var(--text-lighter)">—</span>
-        <input type="number" id="maxPrice" placeholder="Max" min="0" onchange="applyFilters()" />
-      </div>
-    </div>
-    <div class="filter-block">
-      <h4>Availability</h4>
-      <label class="filter-option"><input type="checkbox" id="inStockOnly" onchange="applyFilters()" /><span>In Stock Only</span></label>
-    </div>
-    <div class="filter-block">
-      <h4>Badge</h4>
-      <label class="filter-option"><input type="checkbox" value="new" onchange="applyFilters()" class="badge-filter" /><span>New Arrivals</span></label>
-      <label class="filter-option"><input type="checkbox" value="bestseller" onchange="applyFilters()" class="badge-filter" /><span>Bestsellers</span></label>
-      <label class="filter-option"><input type="checkbox" value="sale" onchange="applyFilters()" class="badge-filter" /><span>On Sale</span></label>
-    </div>
-    <button class="btn-ghost" style="width:100%" onclick="clearFilters()">Clear All Filters</button>
-  </aside>
-
-  <div>
-    <div class="shop-header">
-      <div>
-        <div class="active-filters" id="activeFilters"></div>
-        <span class="shop-result-count" id="resultCount">Showing all products</span>
-      </div>
-      <div class="shop-sort">
-        <select id="sortSelect" onchange="applyFilters()">
-          <option value="featured">Featured</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="new">Newest First</option>
-        </select>
-      </div>
-    </div>
-    <div class="products-grid" id="productsGrid"></div>
-    <div id="noResults" class="no-results" style="display:none">
-      <span>🔍</span>
-      <p>No products found. Try adjusting your filters.</p>
-      <button class="btn-outline" onclick="clearFilters()" style="margin-top:16px">Clear Filters</button>
-    </div>
-  </div>
-</div>
-
-<!-- CART -->
-<div class="cart-sidebar" id="cartSidebar">
-  <div class="cart-header"><h3>Your Bag</h3><button onclick="closeCart()">✕</button></div>
-  <div class="cart-items" id="cartItems"><div class="cart-empty"><span>🛍️</span><p>Your bag is empty</p></div></div>
-  <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="cart-subtotal"><span>Subtotal</span><strong id="cartSubtotal">R 0</strong></div>
-    <p class="cart-shipping-note">Free delivery on orders over R 600</p>
-    <a href="checkout.html" class="btn-primary full-width">Checkout →</a>
-  </div>
-</div>
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-
-<footer class="footer" style="margin-top:60px">
-  <div class="container">
-    <div class="footer-bottom">
-      <p>© 2026 ElegantLaine. All rights reserved.</p>
-      <div class="payment-icons"><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span></div>
-    </div>
-  </div>
-</footer>
-
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
 <script src="js/firebase-init.js"></script>
 <script src="js/store.js"></script>
 <script>
@@ -217,5 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!window.__EL_FB_OK__) applyFilters();
 });
 </script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-init.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* global firebase */
-(function initElegantLaineFirebase() {
+(function initElegantlaineFirebase() {
   window.__EL_FB_OK__ = false;
   window.__EL_DB__ = null;
   window.__EL_AUTH__ = null;

@@ -3,521 +3,359 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ElegantLaine — Wigs, Bags & Beauty</title>
-  <meta name="description" content="ElegantLaine offers premium wigs, designer bags, and luxury beauty products. Discover your most confident self." />
-  <meta name="keywords" content="wigs, human hair wigs, designer bags, makeup, beauty products, lace front wigs, luxury beauty" />
-  <meta name="author" content="ElegantLaine" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="ElegantLaine — Wigs, Bags & Beauty" />
-  <meta property="og:description" content="Premium wigs, bags & beauty essentials. Effortlessly you." />
-  <meta property="og:image" content="https://elegantlaine.com/images/og-cover.jpg" />
+  <title>Elegantlaine — Wigs, Bags & Beauty | South Africa</title>
+  <meta name="description" content="Shop premium wigs, designer bags and luxury beauty products in South Africa. Free delivery over R 600." />
+  <meta name="keywords" content="wigs south africa, lace front wigs, designer bags, makeup, beauty, human hair wigs" />
+  <meta property="og:title" content="Elegantlaine — Wigs, Bags & Beauty" />
+  <meta property="og:description" content="Premium wigs, bags & beauty. Free delivery over R 600." />
   <meta property="og:url" content="https://elegantlaine.com" />
   <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ElegantLaine — Wigs, Bags & Beauty" />
-  <meta name="twitter:description" content="Premium wigs, bags & beauty essentials. Effortlessly you." />
-  <meta name="twitter:image" content="https://elegantlaine.com/images/og-cover.jpg" />
-
-  <!-- Google Fonts: display + UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..600;1,9..40,300..600&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&display=swap" rel="stylesheet" />
-
-  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
-
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Store",
-    "name": "ElegantLaine",
-    "url": "https://elegantlaine.com",
-    "description": "Premium wigs, designer bags, and luxury beauty products",
-    "image": "https://elegantlaine.com/images/og-cover.jpg",
-    "priceRange": "R500–R5000",
-    "telephone": "+27-10-000-0000",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "ZA"
-    },
-    "sameAs": [
-      "https://www.instagram.com/elegantlaine"
-    ]
-  }
-  </script>
-
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"Elegantlaine","url":"https://elegantlaine.com","description":"Premium wigs, designer bags, and luxury beauty products","priceRange":"R500-R5000","address":{"@type":"PostalAddress","addressCountry":"ZA"}}</script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-init.js"></script>
   <link rel="stylesheet" href="css/store.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
+  <style>
+.flash-bar{background:#b71c1c;color:#fff;text-align:center;padding:9px 16px;font-size:.78rem;font-weight:500;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:12px}
+.flash-bar a{color:#ffcdd2;text-decoration:underline}
+.flash-countdown{background:rgba(255,255,255,.18);padding:2px 10px;border-radius:4px;font-weight:700;letter-spacing:.08em;font-size:.82rem}
+.hero{background:var(--deep);min-height:unset;padding:0;display:grid;grid-template-columns:1fr 1.1fr;overflow:hidden;position:relative}
+.hero-left{padding:64px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.hero-kicker{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.hero-kicker::before{content:'';width:24px;height:1px;background:var(--gold);display:block}
+.hero-h1{font-family:var(--font-display);font-size:clamp(2.4rem,4.5vw,4rem);font-weight:300;color:#fff;line-height:1.08;margin-bottom:20px}
+.hero-h1 em{font-style:italic;color:var(--gold)}
+.hero-sub-tight{font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:32px;max-width:340px}
+.hero-btn-row{display:flex;gap:12px;flex-wrap:wrap}
+.hero-btn-primary{background:var(--gold-dark);color:#fff;padding:14px 28px;border-radius:4px;font-size:.875rem;font-weight:500;transition:var(--transition)}
+.hero-btn-primary:hover{background:var(--gold)}
+.hero-btn-ghost{border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:13px 28px;border-radius:4px;font-size:.875rem;font-weight:500;transition:var(--transition)}
+.hero-btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.hero-trust-pills{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.hero-trust-pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.55);font-size:.72rem;padding:5px 12px;border-radius:24px;letter-spacing:.04em}
+.hero-right{position:relative;overflow:hidden;min-height:520px}
+.hero-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;height:100%;gap:3px}
+.hero-mosaic-img{overflow:hidden;position:relative}
+.hero-mosaic-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.hero-mosaic-img:hover img{transform:scale(1.04)}
+.hero-mosaic-label{position:absolute;bottom:12px;left:12px;background:rgba(26,18,8,.72);color:#fff;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;backdrop-filter:blur(4px)}
+.hero-mosaic-img--tall{grid-row:span 2}
+.hero-overlay-grad{position:absolute;inset:0;background:linear-gradient(to right,rgba(26,18,8,.6) 0%,transparent 35%);pointer-events:none;z-index:1}
+.cat-strip{background:#fff;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.cat-strip::-webkit-scrollbar{display:none}
+.cat-strip-inner{display:flex;align-items:stretch;min-width:max-content;max-width:1280px;margin:0 auto;padding:0 24px}
+.cat-pill{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 24px;font-size:.75rem;font-weight:500;color:var(--text-light);white-space:nowrap;border-bottom:2px solid transparent;transition:var(--transition);cursor:pointer;text-decoration:none}
+.cat-pill:hover,.cat-pill.active{color:var(--deep);border-bottom-color:var(--gold-dark)}
+.cat-pill-icon{font-size:1.5rem}
+.deal-row{background:linear-gradient(135deg,var(--deep) 0%,#2d2010 100%);padding:40px 0}
+.deal-row-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center}
+.deal-label-block{border-right:1px solid rgba(255,255,255,.12);padding-right:40px}
+.deal-label-block h2{font-family:var(--font-display);font-size:1.8rem;font-weight:300;color:#fff;line-height:1.1}
+.deal-label-block p{font-size:.78rem;color:rgba(255,255,255,.4);margin-top:6px}
+.deal-timer{display:flex;gap:8px;margin-top:16px}
+.deal-timer-block{background:rgba(255,255,255,.08);border-radius:6px;padding:8px 12px;text-align:center;min-width:52px}
+.deal-timer-num{font-size:1.4rem;font-weight:700;color:var(--gold);display:block;font-variant-numeric:tabular-nums}
+.deal-timer-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35)}
+.deal-products{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.deal-products::-webkit-scrollbar{display:none}
+.deal-product-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px;min-width:180px;max-width:180px;flex-shrink:0;cursor:pointer;transition:var(--transition);text-decoration:none}
+.deal-product-card:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.deal-product-img{height:120px;border-radius:6px;overflow:hidden;margin-bottom:10px}
+.deal-product-img img{width:100%;height:100%;object-fit:cover}
+.deal-product-name{font-size:.8rem;color:rgba(255,255,255,.85);font-weight:500;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deal-product-price{font-size:1rem;font-weight:700;color:var(--gold)}
+.deal-product-old{font-size:.75rem;color:rgba(255,255,255,.3);text-decoration:line-through;margin-left:6px}
+.deal-product-save{font-size:.65rem;background:#b71c1c;color:#fff;padding:2px 7px;border-radius:3px;font-weight:700;margin-top:4px;display:inline-block}
+.section-strip{padding:48px 0}
+.products-grid-dense{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.product-card-dense{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:var(--transition);cursor:pointer;position:relative}
+.product-card-dense:hover{box-shadow:0 6px 24px rgba(26,18,8,.12);transform:translateY(-2px)}
+.pcd-img{aspect-ratio:1;overflow:hidden;position:relative;background:var(--cream)}
+.pcd-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;display:block}
+.product-card-dense:hover .pcd-img img{transform:scale(1.05)}
+.pcd-badge{position:absolute;top:8px;left:8px;z-index:2;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.pcd-badge.sale{background:#b71c1c;color:#fff}
+.pcd-badge.new{background:var(--gold-dark);color:#fff}
+.pcd-badge.bestseller{background:var(--deep);color:#fff}
+.pcd-wish{position:absolute;top:8px;right:8px;z-index:2;width:28px;height:28px;background:rgba(255,255,255,.9);border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;cursor:pointer;opacity:0;transition:var(--transition)}
+.product-card-dense:hover .pcd-wish{opacity:1}
+.pcd-info{padding:10px 12px 12px}
+.pcd-name{font-size:.82rem;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcd-price{font-size:1rem;font-weight:700;color:var(--deep)}
+.pcd-old{font-size:.75rem;color:var(--text-lighter);text-decoration:line-through;margin-left:5px}
+.pcd-save{font-size:.65rem;color:#b71c1c;font-weight:600}
+.pcd-stars{font-size:.68rem;color:var(--gold-dark);margin-top:2px}
+.pcd-add{width:100%;background:var(--deep);color:#fff;border:none;padding:9px;font-size:.78rem;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:var(--transition);letter-spacing:.02em}
+.pcd-add:hover{background:var(--gold-dark)}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sh h2{font-family:var(--font-display);font-size:1.6rem;font-weight:400;color:var(--deep)}
+.sh a{font-size:.8rem;color:var(--text-light);white-space:nowrap}
+.sh a:hover{color:var(--deep)}
+.cat-tiles{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.cat-tile{position:relative;border-radius:10px;overflow:hidden;display:block;cursor:pointer;text-decoration:none}
+.cat-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.cat-tile:hover img{transform:scale(1.04)}
+.cat-tile-inner{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,18,8,.7) 0%,rgba(26,18,8,.1) 50%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+.cat-tile-name{font-family:var(--font-display);font-size:1.6rem;font-weight:400;color:#fff;line-height:1}
+.cat-tile-sub{font-size:.72rem;color:rgba(255,255,255,.65);margin-top:4px}
+.cat-tile-btn{margin-top:12px;background:var(--gold-dark);color:#fff;font-size:.75rem;font-weight:600;padding:7px 16px;border-radius:4px;display:inline-block;width:fit-content;transition:var(--transition)}
+.cat-tile:hover .cat-tile-btn{background:var(--gold)}
+.cat-tile--large{aspect-ratio:4/5}
+.cat-tile--small{aspect-ratio:3/4}
+.promo-band{background:var(--cream);border:1px solid var(--border);border-radius:10px;display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;margin:12px auto;max-width:1280px;padding:0 24px}
+.promo-band{padding:0;margin:12px 24px;max-width:calc(1280px - 48px)}
+.promo-item{padding:24px 20px;display:flex;align-items:center;gap:14px;border-right:1px solid var(--border)}
+.promo-item:last-child{border-right:none}
+.promo-icon{font-size:1.8rem;flex-shrink:0}
+.promo-text strong{display:block;font-size:.82rem;color:var(--deep);font-weight:600}
+.promo-text span{font-size:.72rem;color:var(--text-light)}
+.social-proof{background:var(--deep);padding:48px 0}
+.social-proof-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:center}
+.sp-left h2{font-family:var(--font-display);font-size:2rem;font-weight:300;color:#fff;line-height:1.2}
+.sp-left p{color:rgba(255,255,255,.4);font-size:.85rem;margin-top:8px}
+.sp-socials{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.sp-social-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);padding:8px 16px;border-radius:6px;font-size:.78rem;font-weight:500;text-decoration:none;transition:var(--transition)}
+.sp-social-btn:hover{background:rgba(255,255,255,.13);color:#fff}
+.sp-reviews{display:flex;flex-direction:column;gap:12px}
+.sp-review-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:16px 20px}
+.sp-review-stars{color:var(--gold);font-size:.85rem;margin-bottom:6px}
+.sp-review-text{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.55;margin-bottom:10px}
+.sp-reviewer{font-size:.72rem;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:6px}
+.sp-reviewer-dot{width:18px;height:18px;border-radius:50%;background:var(--gold-dark);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem;font-weight:700}
+.nl-strip{background:var(--gold-dark);padding:32px 0}
+.nl-strip-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.nl-strip-text h3{font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:#fff}
+.nl-strip-text p{font-size:.8rem;color:rgba(255,255,255,.7);margin-top:4px}
+.nl-strip-form{display:flex;gap:0;flex-shrink:0}
+.nl-strip-form input{padding:12px 18px;border:none;border-radius:4px 0 0 4px;font-family:var(--font-body);font-size:.875rem;width:240px;outline:none}
+.nl-strip-form button{background:var(--deep);color:#fff;border:none;padding:12px 20px;border-radius:0 4px 4px 0;font-family:var(--font-body);font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.nl-strip-form button:hover{background:#000}
+@media(max-width:1100px){.products-grid-dense{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-right{min-height:280px}.hero-left{padding:40px 24px}.hero-overlay-grad{display:none}.deal-row-inner{grid-template-columns:1fr}.deal-label-block{border-right:none;border-bottom:1px solid rgba(255,255,255,.12);padding-right:0;padding-bottom:24px}.products-grid-dense{grid-template-columns:repeat(2,1fr)}.cat-tiles{grid-template-columns:1fr 1fr}.cat-tile--large{grid-column:span 2}.promo-band{grid-template-columns:1fr 1fr;margin:12px 16px}.promo-item:nth-child(2){border-right:none}.social-proof-inner{grid-template-columns:1fr;gap:32px}.nl-strip-inner{flex-direction:column;gap:16px}}
+@media(max-width:600px){.products-grid-dense{grid-template-columns:repeat(2,1fr);gap:8px}.cat-tiles{grid-template-columns:1fr}.cat-tile--large{grid-column:span 1}.promo-band{grid-template-columns:1fr}.promo-item{border-right:none;border-bottom:1px solid var(--border)}.promo-item:last-child{border-bottom:none}.nl-strip-form input{width:160px}}
+  </style>
 </head>
 <body>
-
-<!-- ANNOUNCEMENT BAR -->
-<div class="announce-bar">
-  <p>South Africa · Free delivery over R 600 <a href="shop.html">Shop →</a></p>
-</div>
-
-<!-- NAVIGATION -->
+<div class="flash-bar">🔥 Flash Sale — Up to 40% off selected wigs &nbsp;·&nbsp;<span class="flash-countdown" id="flashTimer">02:47:13</span>&nbsp;·&nbsp;<a href="shop.html?cat=sale">Shop sale →</a></div>
+<div class="announce-bar"><p>South Africa · Free delivery over R 600 · <a href="shop.html">Shop →</a></p></div>
 <nav class="nav" id="mainNav">
-  <div class="nav-logo">
-    <a href="index.html">
-      <span class="logo-mark">✦</span>
-      <span class="logo-text">ElegantLaine</span>
-    </a>
-  </div>
+  <div class="nav-logo"><a href="index.html"><span class="logo-mark">✦</span><span class="logo-text">Elegantlaine</span></a></div>
   <ul class="nav-links">
-    <li class="has-dropdown">
-      <a href="#">Wigs</a>
-      <div class="dropdown">
-        <a href="shop.html?cat=lace-front">Lace Front</a>
-        <a href="shop.html?cat=full-lace">Full Lace</a>
-        <a href="shop.html?cat=human-hair">Human Hair</a>
-        <a href="shop.html?cat=synthetic">Synthetic</a>
-        <a href="shop.html?cat=bob-wigs">Bob Wigs</a>
-      </div>
-    </li>
-    <li class="has-dropdown">
-      <a href="#">Bags</a>
-      <div class="dropdown">
-        <a href="shop.html?cat=tote-bags">Tote Bags</a>
-        <a href="shop.html?cat=crossbody">Crossbody</a>
-        <a href="shop.html?cat=clutch">Clutch</a>
-        <a href="shop.html?cat=backpack">Backpack</a>
-      </div>
-    </li>
-    <li class="has-dropdown">
-      <a href="#">Beauty</a>
-      <div class="dropdown">
-        <a href="shop.html?cat=foundation">Foundation</a>
-        <a href="shop.html?cat=lipstick">Lips</a>
-        <a href="shop.html?cat=eyeshadow">Eyes</a>
-        <a href="shop.html?cat=skincare">Skincare</a>
-      </div>
-    </li>
-    <li><a href="shop.html">All Products</a></li>
-    <li><a href="#about">About</a></li>
+    <li class="has-dropdown"><a href="shop.html?cat=wigs">Wigs</a><div class="dropdown"><a href="shop.html?cat=lace-front">Lace Front</a><a href="shop.html?cat=full-lace">Full Lace</a><a href="shop.html?cat=human-hair">Human Hair</a><a href="shop.html?cat=synthetic">Synthetic</a><a href="shop.html?cat=bob-wigs">Bob Wigs</a></div></li>
+    <li class="has-dropdown"><a href="shop.html?cat=bags">Bags</a><div class="dropdown"><a href="shop.html?cat=tote-bags">Tote Bags</a><a href="shop.html?cat=crossbody">Crossbody</a><a href="shop.html?cat=clutch">Clutch</a><a href="shop.html?cat=backpack">Backpack</a></div></li>
+    <li class="has-dropdown"><a href="shop.html?cat=beauty">Beauty</a><div class="dropdown"><a href="shop.html?cat=foundation">Foundation</a><a href="shop.html?cat=lipstick">Lips</a><a href="shop.html?cat=eyeshadow">Eyes</a><a href="shop.html?cat=skincare">Skincare</a></div></li>
+    <li><a href="shop.html?cat=new">New In</a></li>
+    <li><a href="shop.html?cat=sale" style="color:var(--rose)">Sale</a></li>
   </ul>
   <div class="nav-actions">
-    <button class="btn-icon" id="searchToggle" aria-label="Search">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    </button>
-    <a href="account.html" class="btn-icon" aria-label="Account">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    </a>
-    <button class="btn-icon cart-btn" id="cartToggle" aria-label="Cart">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      <span class="cart-count" id="cartCount">0</span>
-    </button>
-    <button class="nav-hamburger" id="navToggle">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="btn-icon" id="searchToggle" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <a href="account.html" class="btn-icon" aria-label="Account"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    <button class="btn-icon cart-btn" id="cartToggle" aria-label="Cart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count" id="cartCount">0</span></button>
+    <button class="nav-hamburger" id="navToggle"><span></span><span></span><span></span></button>
   </div>
 </nav>
-
-<!-- SEARCH OVERLAY -->
 <div class="search-overlay" id="searchOverlay">
   <button class="search-close" id="searchClose">✕</button>
   <div class="search-inner">
-    <p class="search-label">What are you looking for?</p>
-    <input type="text" class="search-input" placeholder="Search wigs, bags, beauty..." id="searchInput" />
-    <div class="search-suggestions">
-      <span onclick="searchFor('lace front wig')">Lace front wig</span>
-      <span onclick="searchFor('luxury tote')">Luxury tote</span>
-      <span onclick="searchFor('matte lipstick')">Matte lipstick</span>
-      <span onclick="searchFor('bob wig')">Bob wig</span>
-    </div>
+    <p class="search-label">Search Elegantlaine</p>
+    <input type="text" class="search-input" placeholder="Wigs, bags, beauty..." id="searchInput" />
+    <div class="search-suggestions"><span onclick="searchFor('lace front wig')">Lace front wig</span><span onclick="searchFor('luxury tote')">Luxury tote</span><span onclick="searchFor('foundation')">Foundation</span><span onclick="searchFor('bob wig')">Bob wig</span></div>
   </div>
 </div>
-
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-grain"></div>
+  <div class="hero-overlay-grad"></div>
+  <div class="hero-left">
+    <span class="hero-kicker">New Season Drop</span>
+    <h1 class="hero-h1">Premium wigs,<br/>bags &amp; beauty.<br/><em>Delivered to you.</em></h1>
+    <p class="hero-sub-tight">Hand-curated luxury pieces. Rand pricing. PayFast checkout. Free delivery over R 600.</p>
+    <div class="hero-btn-row"><a href="shop.html" class="hero-btn-primary">Shop All</a><a href="shop.html?cat=new" class="hero-btn-ghost">New Arrivals</a></div>
+    <div class="hero-trust-pills"><span class="hero-trust-pill">✓ Free returns</span><span class="hero-trust-pill">✓ SA-wide delivery</span><span class="hero-trust-pill">✓ Secure PayFast</span></div>
   </div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">ElegantLaine · South Africa · ZAR checkout</span>
-    <h1 class="hero-title">
-      Your boutique for<br/><em>wigs, bags &amp; beauty.</em>
-    </h1>
-    <p class="hero-sub">Shop premium hair, handbags, and cosmetics in one place — clear pricing in Rand, secure PayFast, and free delivery on orders over R&nbsp;600.</p>
-    <div class="hero-ctas">
-      <a href="shop.html" class="btn-primary">Shop all</a>
-      <a href="shop.html?cat=new" class="btn-ghost">New arrivals</a>
-    </div>
-  </div>
-  <div class="hero-visual" aria-label="Trending products">
-    <div class="hero-trending-inner">
-      <p class="hero-trending-label">Trending now</p>
-      <div class="hero-trending-marquee">
-        <div class="hero-marquee-track" id="heroTrendingTrack"></div>
-      </div>
-      <a href="shop.html" class="hero-trending-shop">Shop all →</a>
+  <div class="hero-right">
+    <div class="hero-mosaic">
+      <div class="hero-mosaic-img hero-mosaic-img--tall"><img src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=600&q=80" alt="Wig collection" /><span class="hero-mosaic-label">Wigs</span></div>
+      <div class="hero-mosaic-img"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=80" alt="Bags" /><span class="hero-mosaic-label">Bags</span></div>
+      <div class="hero-mosaic-img"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80" alt="Beauty" /><span class="hero-mosaic-label">Beauty</span></div>
     </div>
   </div>
 </section>
-
-<!-- CATEGORY TILES -->
-<section class="categories">
-  <div class="container">
-    <div class="section-header">
-      <h2>Shop by category</h2>
-      <a href="shop.html" class="link-arrow">View all products →</a>
-    </div>
-    <div class="cat-grid">
-      <a href="shop.html?cat=wigs" class="cat-card cat-card--large">
-        <div class="cat-img cat-img--photo" style="background-image:url('https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=900&q=80');">
-          <span class="cat-img-overlay" aria-hidden="true"></span>
-        </div>
-        <div class="cat-info">
-          <h3>Wigs</h3>
-          <p>Lace front, full lace &amp; more</p>
-        </div>
-      </a>
-      <a href="shop.html?cat=bags" class="cat-card">
-        <div class="cat-img cat-img--photo" style="background-image:url('https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=80');">
-          <span class="cat-img-overlay" aria-hidden="true"></span>
-        </div>
-        <div class="cat-info">
-          <h3>Bags</h3>
-          <p>Totes, crossbody &amp; clutches</p>
-        </div>
-      </a>
-      <a href="shop.html?cat=beauty" class="cat-card">
-        <div class="cat-img cat-img--photo" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=80');">
-          <span class="cat-img-overlay" aria-hidden="true"></span>
-        </div>
-        <div class="cat-info">
-          <h3>Beauty</h3>
-          <p>Makeup &amp; skincare</p>
-        </div>
-      </a>
-    </div>
+<div class="cat-strip">
+  <div class="cat-strip-inner">
+    <a href="shop.html" class="cat-pill active"><span class="cat-pill-icon">🛍️</span>All</a>
+    <a href="shop.html?cat=wigs" class="cat-pill"><span class="cat-pill-icon">👑</span>Wigs</a>
+    <a href="shop.html?cat=lace-front" class="cat-pill"><span class="cat-pill-icon">✦</span>Lace Front</a>
+    <a href="shop.html?cat=human-hair" class="cat-pill"><span class="cat-pill-icon">🌿</span>Human Hair</a>
+    <a href="shop.html?cat=bags" class="cat-pill"><span class="cat-pill-icon">👜</span>Bags</a>
+    <a href="shop.html?cat=beauty" class="cat-pill"><span class="cat-pill-icon">💄</span>Beauty</a>
+    <a href="shop.html?cat=skincare" class="cat-pill"><span class="cat-pill-icon">🧴</span>Skincare</a>
+    <a href="shop.html?cat=new" class="cat-pill"><span class="cat-pill-icon">⭐</span>New In</a>
+    <a href="shop.html?cat=sale" class="cat-pill" style="color:#b71c1c"><span class="cat-pill-icon">🔥</span>Sale</a>
   </div>
-</section>
-
-<!-- TRUST STRIP -->
-<section class="trust-strip">
-  <div class="container">
-    <div class="trust-items">
-      <div class="trust-item">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <div>
-          <strong>Free Shipping</strong>
-          <span>Orders over R 600</span>
-        </div>
-      </div>
-      <div class="trust-item">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <div>
-          <strong>24/7 Support</strong>
-          <span>We're always here</span>
-        </div>
-      </div>
-      <div class="trust-item">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        <div>
-          <strong>Easy Returns</strong>
-          <span>30-day policy</span>
-        </div>
-      </div>
-      <div class="trust-item">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <div>
-          <strong>Secure Checkout</strong>
-          <span>SSL encrypted</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURED PRODUCTS -->
-<section class="featured" id="featured">
-  <div class="container">
-    <div class="section-header">
-      <h2>Bestsellers &amp; new in</h2>
-      <div class="tab-pills">
-        <button class="tab-pill active" data-filter="all">All</button>
-        <button class="tab-pill" data-filter="wigs">Wigs</button>
-        <button class="tab-pill" data-filter="bags">Bags</button>
-        <button class="tab-pill" data-filter="beauty">Beauty</button>
-      </div>
-    </div>
-    <div class="products-grid" id="productsGrid">
-      <!-- JS renders products here -->
-    </div>
-    <div class="load-more-wrap">
-      <a href="shop.html" class="btn-outline">View All Products</a>
-    </div>
-  </div>
-</section>
-
-<!-- PROMO STRIP — commerce focus -->
-<section class="editorial-banner">
-  <div class="editorial-inner editorial-inner--commerce">
-    <div class="editorial-text">
-      <span class="eyebrow">ElegantLaine store</span>
-      <h2>Stocked for checkout — <em>not just inspiration.</em></h2>
-      <p>Browse real SKUs with prices, sizes, and delivery across South Africa. Add to bag, pay securely with PayFast, and track your order.</p>
-      <div class="editorial-ctas">
-        <a href="shop.html" class="btn-primary">Shop products</a>
-        <a href="shipping.html" class="btn-ghost btn-ghost--on-dark">Delivery &amp; returns</a>
-      </div>
-    </div>
-    <div class="editorial-visual editorial-visual--photos">
-      <div class="editorial-photo ep-1" style="background-image:url('https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=500&q=80')" role="img" aria-label="Handbag"></div>
-      <div class="editorial-photo ep-2" style="background-image:url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=500&q=80')" role="img" aria-label="Beauty"></div>
-      <div class="editorial-photo ep-3" style="background-image:url('https://images.unsplash.com/photo-1560869713-da86a43ec457?auto=format&fit=crop&w=500&q=80')" role="img" aria-label="Hair"></div>
-    </div>
-  </div>
-</section>
-
-<!-- GOOGLE ADSENSE UNIT -->
-<div class="adsense-wrap">
-  <ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-     data-ad-slot="XXXXXXXXXX"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="container">
-    <div class="section-header centered">
-      <h2>Real women, real confidence.</h2>
-      <p>Over 4,000 happy customers and counting.</p>
-    </div>
-    <div class="reviews-carousel" id="reviewsCarousel">
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p>"The lace front wig I ordered was absolutely perfect. The hairline looked so natural, everyone thought it was my real hair. Fast shipping too!"</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">J</div>
-          <div>
-            <strong>Jasmine T.</strong>
-            <span>Verified buyer · Lace Front Wig</span>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p>"The tote bag I got is gorgeous — sturdy, spacious, and turns heads everywhere. ElegantLaine has become my go-to for everything fashion."</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">A</div>
-          <div>
-            <strong>Amara K.</strong>
-            <span>Verified buyer · Classic Tote Bag</span>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p>"That foundation shade matched my skin perfectly. I've been searching forever. The whole beauty range is just *chef's kiss*. Will be back!"</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">N</div>
-          <div>
-            <strong>Nicole M.</strong>
-            <span>Verified buyer · Silk Finish Foundation</span>
-          </div>
-        </div>
+<div class="promo-band">
+  <div class="promo-item"><span class="promo-icon">🚚</span><div class="promo-text"><strong>Free Delivery</strong><span>On orders over R 600</span></div></div>
+  <div class="promo-item"><span class="promo-icon">🔒</span><div class="promo-text"><strong>Secure Checkout</strong><span>PayFast encrypted</span></div></div>
+  <div class="promo-item"><span class="promo-icon">↩️</span><div class="promo-text"><strong>Easy Returns</strong><span>30-day return policy</span></div></div>
+  <div class="promo-item"><span class="promo-icon">💬</span><div class="promo-text"><strong>SA Support</strong><span>Mon–Fri, 8am–5pm SAST</span></div></div>
+</div>
+<div class="deal-row">
+  <div class="deal-row-inner">
+    <div class="deal-label-block">
+      <h2>Deals of<br/>the Day</h2>
+      <p>Ends at midnight</p>
+      <div class="deal-timer">
+        <div class="deal-timer-block"><span class="deal-timer-num" id="dtH">02</span><span class="deal-timer-label">hrs</span></div>
+        <div class="deal-timer-block"><span class="deal-timer-num" id="dtM">47</span><span class="deal-timer-label">min</span></div>
+        <div class="deal-timer-block"><span class="deal-timer-num" id="dtS">13</span><span class="deal-timer-label">sec</span></div>
       </div>
     </div>
-    <div class="carousel-dots" id="carouselDots"></div>
+    <div class="deal-products" id="dealProducts"></div>
   </div>
-</section>
-
-<!-- SOCIAL -->
-<section class="social-section">
+</div>
+<div class="section-strip" style="background:#fff;">
+  <div class="container"><div class="sh"><h2>Featured Wigs</h2><a href="shop.html?cat=wigs">View all wigs →</a></div><div class="products-grid-dense" id="wigsGrid"></div></div>
+</div>
+<div style="padding:0 0 48px;background:#fff;">
   <div class="container">
-    <div class="section-header centered">
-      <h2>Follow ElegantLaine</h2>
-      <p>New arrivals, restocks, and customer features on Instagram. Tag <strong>@elegantlaine</strong>.</p>
-    </div>
-    <div class="social-links social-links--single">
-      <a href="https://www.instagram.com/elegantlaine" class="social-card" target="_blank" rel="noopener noreferrer">
-        <div class="social-icon" style="background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="white" stroke-width="1.5"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-        <div class="social-info">
-          <strong>Instagram</strong>
-          <span>@elegantlaine</span>
-          <em>Looks, launches &amp; behind the scenes</em>
-        </div>
-        <span class="social-follow">Follow →</span>
-      </a>
-    </div>
-    <div class="social-ugc-note">
-      <p>📸 Tag <strong>#ElegantLaine</strong> or <strong>@elegantlaine</strong> for a chance to be featured on our page.</p>
+    <div class="sh"><h2>Shop by Category</h2><a href="shop.html">All products →</a></div>
+    <div class="cat-tiles">
+      <a href="shop.html?cat=wigs" class="cat-tile cat-tile--large"><img src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=800&q=80" alt="Wigs" /><div class="cat-tile-inner"><div class="cat-tile-name">Wigs</div><div class="cat-tile-sub">Lace front, full lace & more</div><span class="cat-tile-btn">Shop Wigs →</span></div></a>
+      <a href="shop.html?cat=bags" class="cat-tile cat-tile--small"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80" alt="Bags" /><div class="cat-tile-inner"><div class="cat-tile-name">Bags</div><div class="cat-tile-sub">Totes, crossbody & clutches</div><span class="cat-tile-btn">Shop Bags →</span></div></a>
+      <a href="shop.html?cat=beauty" class="cat-tile cat-tile--small"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" alt="Beauty" /><div class="cat-tile-inner"><div class="cat-tile-name">Beauty</div><div class="cat-tile-sub">Makeup & skincare</div><span class="cat-tile-btn">Shop Beauty →</span></div></a>
     </div>
   </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section class="newsletter">
-  <div class="container">
-    <div class="newsletter-inner">
-      <div class="nl-text">
-        <span class="eyebrow">Stay in the loop</span>
-        <h2>Be first to know.</h2>
-        <p>New drops, exclusive deals, beauty tips — straight to your inbox. No spam, ever.</p>
-        <ul class="nl-perks">
-          <li>✦ 10% off your first order</li>
-          <li>✦ Early access to new arrivals</li>
-          <li>✦ Members-only flash sales</li>
-        </ul>
+</div>
+<div class="section-strip" style="background:var(--cream);">
+  <div class="container"><div class="sh"><h2>Featured Bags</h2><a href="shop.html?cat=bags">View all bags →</a></div><div class="products-grid-dense" id="bagsGrid"></div></div>
+</div>
+<div style="max-width:1280px;margin:0 auto;padding:8px 24px;"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<div class="section-strip" style="background:#fff;">
+  <div class="container"><div class="sh"><h2>Beauty Essentials</h2><a href="shop.html?cat=beauty">View all beauty →</a></div><div class="products-grid-dense" id="beautyGrid"></div></div>
+</div>
+<div class="social-proof">
+  <div class="social-proof-inner">
+    <div class="sp-left">
+      <h2>4,000+ happy customers across SA.</h2>
+      <p>Real women. Real results. Real confidence.</p>
+      <div class="sp-socials">
+        <a href="https://instagram.com/elegantlaine" class="sp-social-btn" target="_blank">📸 Instagram</a>
+        <a href="https://tiktok.com/@elegantlaine" class="sp-social-btn" target="_blank">🎵 TikTok</a>
+        <a href="https://facebook.com/elegantlaine" class="sp-social-btn" target="_blank">📘 Facebook</a>
       </div>
-      <div class="nl-form">
-        <form onsubmit="subscribeNewsletter(event)">
-          <input type="text" placeholder="First name" id="nlName" required />
-          <input type="email" placeholder="Email address" id="nlEmail" required />
-          <button type="submit" class="btn-primary">Get 10% Off →</button>
-        </form>
-        <p class="nl-fine">By subscribing you agree to our <a href="privacy.html">Privacy Policy</a>. Unsubscribe anytime.</p>
-        <div class="nl-success" id="nlSuccess">🎉 You're in! Check your inbox for your discount code.</div>
-      </div>
+      <p style="margin-top:14px;font-size:.72rem;color:rgba(255,255,255,.3)">Tag <strong style="color:rgba(255,255,255,.5)">#Elegantlaine</strong> to be featured</p>
+    </div>
+    <div class="sp-reviews">
+      <div class="sp-review-card"><div class="sp-review-stars">★★★★★</div><div class="sp-review-text">"The lace front wig was absolutely flawless. Everyone thought it was my real hair. Delivered in 3 days to Joburg!"</div><div class="sp-reviewer"><div class="sp-reviewer-dot">J</div> Jasmine T. · Verified · Silk Lace Front</div></div>
+      <div class="sp-review-card"><div class="sp-review-stars">★★★★★</div><div class="sp-review-text">"Gorgeous quilted bag — exactly as pictured. The quality is premium. Will definitely be ordering again."</div><div class="sp-reviewer"><div class="sp-reviewer-dot">A</div> Amara K. · Verified · Quilted Chain Crossbody</div></div>
     </div>
   </div>
-</section>
-
-<!-- ABOUT TEASER -->
-<section class="about-teaser" id="about">
-  <div class="container">
-    <div class="about-inner">
-      <div class="about-visual">
-        <div class="about-card-stack">
-          <div class="about-card ac-1">
-            <span>Founded with love.</span>
-          </div>
-          <div class="about-card ac-2">✦</div>
-        </div>
-      </div>
-      <div class="about-text">
-        <span class="eyebrow">Why shop with us</span>
-        <h2>ElegantLaine — <em>wigs, bags &amp; beauty</em> in one cart.</h2>
-        <p>We built this store to sell products you can add to bag today: clear photos, Rand prices, and support when you need it. Hair, handbags, and cosmetics — curated for quality, packaged to ship.</p>
-        <p>Thousands of customers across SA trust ElegantLaine for everyday glam and wardrobe staples.</p>
-        <a href="about.html" class="btn-outline">About ElegantLaine →</a>
-      </div>
-    </div>
+</div>
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text"><h3>Get 10% off your first order.</h3><p>New drops, exclusive deals, beauty tips — no spam.</p></div>
+    <form class="nl-strip-form" onsubmit="nlSubmit(event)"><input type="email" id="nlEmail" placeholder="Your email address" required /><button type="submit">Subscribe →</button></form>
   </div>
-</section>
-
-<!-- FOOTER -->
+</div>
 <footer class="footer">
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="footer-logo">
-          <span class="logo-mark">✦</span> ElegantLaine
-        </div>
-        <p>Premium wigs, bags & beauty. Because you deserve it.</p>
+        <div class="footer-logo"><span class="logo-mark">✦</span> Elegantlaine</div>
+        <p>Premium wigs, bags & beauty. South Africa.</p>
         <div class="footer-social-mini">
-          <a href="https://www.instagram.com/elegantlaine" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
+          <a href="https://instagram.com/elegantlaine" target="_blank" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://tiktok.com/@elegantlaine" target="_blank" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+          <a href="https://facebook.com/elegantlaine" target="_blank" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
         </div>
       </div>
       <div class="footer-links">
-        <div class="footer-col">
-          <h4>Shop</h4>
-          <a href="shop.html?cat=wigs">Wigs</a>
-          <a href="shop.html?cat=bags">Bags</a>
-          <a href="shop.html?cat=beauty">Beauty</a>
-          <a href="shop.html?cat=new">New Arrivals</a>
-          <a href="shop.html?cat=sale">Sale</a>
-        </div>
-        <div class="footer-col">
-          <h4>Help</h4>
-          <a href="faq.html">FAQs</a>
-          <a href="shipping.html">Shipping & Returns</a>
-          <a href="size-guide.html">Size Guide</a>
-          <a href="track.html">Track Order</a>
-          <a href="contact.html">Contact Us</a>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <a href="about.html">About Us</a>
-          <a href="size-guide.html">Product care &amp; sizing</a>
-          <a href="affiliate.html">Become an Affiliate</a>
-          <a href="wholesale.html">Wholesale</a>
-          <a href="admin/index.html">Admin</a>
-        </div>
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="cookies.html">Cookie Policy</a>
-        </div>
+        <div class="footer-col"><h4>Shop</h4><a href="shop.html?cat=wigs">Wigs</a><a href="shop.html?cat=bags">Bags</a><a href="shop.html?cat=beauty">Beauty</a><a href="shop.html?cat=new">New Arrivals</a><a href="shop.html?cat=sale">Sale</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="faq.html">FAQs</a><a href="shipping.html">Shipping & Returns</a><a href="size-guide.html">Size Guide</a><a href="track.html">Track Order</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="affiliate.html">Affiliates</a><a href="wholesale.html">Wholesale</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 ElegantLaine. South Africa.</p>
-      <div class="payment-icons">
-        <span>Visa</span>
-        <span>Mastercard</span>
-        <span>PayFast</span>
-      </div>
-    </div>
+    <div class="footer-bottom"><p>© 2025 Elegantlaine. All rights reserved. South Africa.</p><div class="payment-icons"><span>Visa</span><span>Mastercard</span><span>PayFast</span><span>EFT</span></div></div>
   </div>
 </footer>
-
-<!-- CART SIDEBAR -->
 <div class="cart-sidebar" id="cartSidebar">
-  <div class="cart-header">
-    <h3>Your Bag</h3>
-    <button onclick="closeCart()">✕</button>
-  </div>
-  <div class="cart-items" id="cartItems">
-    <div class="cart-empty">
-      <span>🛍️</span>
-      <p>Your bag is empty</p>
-      <a href="shop.html" class="btn-primary">Start Shopping</a>
-    </div>
-  </div>
+  <div class="cart-header"><h3>Your Bag</h3><button onclick="closeCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty"><span>🛍️</span><p>Your bag is empty</p><a href="shop.html" class="btn-primary">Start Shopping</a></div></div>
   <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="cart-subtotal">
-      <span>Subtotal</span>
-      <strong id="cartSubtotal">R 0</strong>
-    </div>
+    <div class="cart-subtotal"><span>Subtotal</span><strong id="cartSubtotal">R 0</strong></div>
     <p class="cart-shipping-note">Free delivery on orders over R 600</p>
     <a href="checkout.html" class="btn-primary full-width">Checkout →</a>
     <button onclick="closeCart()" class="btn-ghost full-width" style="margin-top:8px">Continue Shopping</button>
   </div>
 </div>
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-
-<!-- COOKIE BANNER -->
 <div class="cookie-banner" id="cookieBanner">
-  <p>We use cookies to enhance your experience and serve relevant ads. <a href="cookies.html">Learn more</a></p>
-  <div class="cookie-actions">
-    <button onclick="acceptCookies()" class="btn-primary">Accept</button>
-    <button onclick="declineCookies()" class="btn-ghost">Decline</button>
-  </div>
+  <p>We use cookies to enhance your experience. <a href="cookies.html">Learn more</a></p>
+  <div class="cookie-actions"><button onclick="acceptCookies()" class="btn-primary">Accept</button><button onclick="declineCookies()" class="btn-ghost">Decline</button></div>
 </div>
-
-<!-- STICKY ADD TO CART (mobile) -->
-<div class="sticky-bottom-cta" id="stickyShop">
-  <a href="shop.html" class="btn-primary full-width">Shop — free delivery over R 600</a>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js"></script>
-<script src="js/firebase-init.js"></script>
 <script src="js/store.js"></script>
+<script>
+(function(){
+  let secs=2*3600+47*60+13;
+  function tick(){secs=Math.max(0,secs-1);const h=String(Math.floor(secs/3600)).padStart(2,'0');const m=String(Math.floor((secs%3600)/60)).padStart(2,'0');const s=String(secs%60).padStart(2,'0');const ft=document.getElementById('flashTimer');const dtH=document.getElementById('dtH');const dtM=document.getElementById('dtM');const dtS=document.getElementById('dtS');if(ft)ft.textContent=`${h}:${m}:${s}`;if(dtH)dtH.textContent=h;if(dtM)dtM.textContent=m;if(dtS)dtS.textContent=s;}
+  setInterval(tick,1000);
+})();
+
+function nlSubmit(e){e.preventDefault();showToast('Subscribed! Your 10% off code is on its way.');e.target.reset();}
+
+function renderDenseGrid(containerId,products,limit){
+  const el=document.getElementById(containerId);if(!el)return;
+  const list=limit?products.slice(0,limit):products;
+  el.innerHTML=list.map(p=>{
+    const inW=(JSON.parse(localStorage.getItem('el_wishlist')||'[]')).some(id=>String(id)===String(p.id));
+    const save=p.oldPrice?Math.round((1-p.price/p.oldPrice)*100):0;
+    return `<div class="product-card-dense">
+      <div class="pcd-img">
+        ${p.badge?`<span class="pcd-badge ${p.badge}">${p.badge}</span>`:''}
+        <button class="pcd-wish" onclick="toggleWishlist(${JSON.stringify(p.id)},this)">${inW?'❤️':'🤍'}</button>
+        ${p.image?`<img src="${p.image}" alt="${p.name}" loading="lazy" />`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;background:linear-gradient(135deg,${p.color}22,${p.color}44)">${p.emoji}</div>`}
+      </div>
+      <div class="pcd-info">
+        <div class="pcd-name">${p.name}</div>
+        <div><span class="pcd-price">${formatZAR(p.price)}</span>${p.oldPrice?`<span class="pcd-old">${formatZAR(p.oldPrice)}</span>`:''}</div>
+        ${save?`<div class="pcd-save">Save ${save}%</div>`:''}
+        <div class="pcd-stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)} <span style="color:var(--text-lighter)">(${p.reviews})</span></div>
+      </div>
+      <button class="pcd-add" onclick="addToCart(${JSON.stringify(p.id)})">Add to Bag</button>
+    </div>`;
+  }).join('');
+}
+
+function renderDealProducts(products){
+  const el=document.getElementById('dealProducts');if(!el)return;
+  const deals=products.filter(p=>p.badge==='sale'||p.oldPrice).slice(0,6);
+  if(!deals.length){el.innerHTML='<p style="color:rgba(255,255,255,.4);font-size:.85rem">No deals right now.</p>';return;}
+  el.innerHTML=deals.map(p=>{
+    const save=p.oldPrice?Math.round((1-p.price/p.oldPrice)*100):0;
+    return `<a href="product.html?id=${encodeURIComponent(p.id)}" class="deal-product-card">
+      <div class="deal-product-img">${p.image?`<img src="${p.image}" alt="${p.name}" loading="lazy" />`:`<div style="background:linear-gradient(135deg,${p.color}44,${p.color}88);height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem">${p.emoji}</div>`}</div>
+      <div class="deal-product-name">${p.name}</div>
+      <div><span class="deal-product-price">${formatZAR(p.price)}</span>${p.oldPrice?`<span class="deal-product-old">${formatZAR(p.oldPrice)}</span>`:''}</div>
+      ${save?`<span class="deal-product-save">${save}% OFF</span>`:''}
+    </a>`;
+  }).join('');
+}
+
+window.addEventListener('el-products-ready',function(){
+  const ps=window.EL_PRODUCTS||[];
+  renderDealProducts(ps);
+  renderDenseGrid('wigsGrid',ps.filter(p=>p.category==='wigs'),5);
+  renderDenseGrid('bagsGrid',ps.filter(p=>p.category==='bags'),5);
+  renderDenseGrid('beautyGrid',ps.filter(p=>p.category==='beauty'),5);
+});
+</script>
 </body>
 </html>

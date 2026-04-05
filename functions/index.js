@@ -102,7 +102,7 @@ app.post('/api/payfast/prepare', (req, res) => {
     const paymentId = `EL-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
     payload = buildPaymentPayload({
       amount: v.amount,
-      itemName: 'ElegantLaine order',
+      itemName: 'Elegantlaine order',
       itemDescription: v.itemDescription,
       email: email.trim(),
       firstName,

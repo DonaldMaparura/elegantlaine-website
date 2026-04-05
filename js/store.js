@@ -1,5 +1,5 @@
 // ============================================
-// ElegantLaine — Store JS (ZAR)
+// Elegantlaine — Store JS (ZAR)
 // ============================================
 
 const FREE_SHIPPING_MIN = 600;

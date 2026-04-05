@@ -1,4 +1,4 @@
-# ElegantLaine — Complete Setup Guide
+# Elegantlaine — Complete Setup Guide
 
 ## Project Structure
 ```

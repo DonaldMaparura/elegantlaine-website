@@ -1,5 +1,5 @@
 /**
- * Firebase Web SDK config — ElegantLaine (project: elegantlaine).
+ * Firebase Web SDK config — Elegantlaine (project: elegantlaine).
  * Public client keys; rules secure your data in Firestore.
  */
 window.__EL_FIREBASE_CONFIG__ = {

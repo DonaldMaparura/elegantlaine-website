@@ -1,5 +1,5 @@
 // ============================================
-// ElegantLaine Admin — Firebase Auth + Firestore
+// Elegantlaine Admin — Firebase Auth + Firestore
 // ============================================
 
 /* global firebase */
@@ -451,20 +451,29 @@ function clearProductForm() {
   if (imgs) imgs.innerHTML = '';
 }
 
-function handleImageUpload(e) {
+async function handleImageUpload(e) {
   const files = Array.from(e.target.files);
   const container = document.getElementById('uploadedImages');
-  files.forEach((file) => {
-    const reader = new FileReader();
-    reader.onload = (ev) => {
+  const pImageInput = document.getElementById('pImage');
+  for (const file of files) {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'uploaded-img-wrap';
+    placeholder.innerHTML = '<div class="uploaded-img-loading">Uploading...</div>';
+    container.appendChild(placeholder);
+    try {
+      const url = await uploadImageToStorage(file);
       const img = document.createElement('img');
-      img.src = ev.target.result;
+      img.src = url;
       img.className = 'uploaded-img';
       img.title = file.name;
-      container.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
+      img.style.cursor = 'pointer';
+      img.onclick = () => { if (pImageInput) pImageInput.value = url; showAdminToast('Image set as product image ✓'); };
+      placeholder.replaceWith(img);
+      if (pImageInput && !pImageInput.value) pImageInput.value = url;
+    } catch (err) {
+      placeholder.replaceWith(document.createTextNode('Upload failed: ' + err.message));
+    }
+  }
 }
 
 function renderOrders(statusFilter = 'all') {
@@ -603,4 +612,22 @@ function showAdminToast(msg) {
     t.classList.remove('show');
     setTimeout(() => t.remove(), 300);
   }, 2800);
+}
+
+// ---- FIREBASE STORAGE IMAGE UPLOAD ----
+async function uploadImageToStorage(file) {
+  if (!window.__EL_FB_OK__ || typeof firebase.storage !== 'function') {
+    // Fallback: return base64 data URL
+    return new Promise((res) => {
+      const r = new FileReader();
+      r.onload = (e) => res(e.target.result);
+      r.readAsDataURL(file);
+    });
+  }
+  const storage = firebase.storage();
+  const ext = file.name.split('.').pop();
+  const path = `products/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  const ref = storage.ref(path);
+  await ref.put(file);
+  return await ref.getDownloadURL();
 }
